@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.3
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
 
+import "menuCreation.js" as MenuOptions
+
 Window
 {
     id: root
@@ -21,13 +23,15 @@ Window
     }
 
     function playBoardMakeMove(index) {
-        var right = (index + 1),
-            left =  (index - 1),
-            down = (index + boardSize),
-            up =  (index - boardSize);
-        /*TODO: Алгоритм (лучевой?) для перемещения "стека" ячеек.
-                Проверяет уровень, на котором находится пустая ячейка и двигает соответствующее количество ячеек по направлению свободной ячейки. */
-        for(var i = 0; i < 16; i++) { // gets index of "free" cell
+        var right = (index + 1) % boardSize != 0 ? (index + 1) : "undefined";
+        var left =  (index - 1) % boardSize != 3 ? (index - 1) : "undefined";
+        var down = (index + boardSize);
+        var up =  (index - boardSize);
+        /*
+         * TODO: Алгоритм (лучевой?) для перемещения "стека" ячеек.
+         * Проверяет уровень, на котором находится пустая ячейка и двигает соответствующее количество ячеек по направлению свободной ячейки.
+         */
+        for(var i = 0; i < 16; i++) {
             if (_playBoardModel.get(i).value === 15) {
                 break;
             }
@@ -58,13 +62,14 @@ Window
             }
         }
         _victoryDialog.open();
+        return true;
     }
 
     function generateArrayRandomNumber() {
-        var totalNumbers 		= 16,
-            arrayTotalNumbers 	= [],
-            arrayRandomNumbers 	= [],
-            tempRandomNumber;
+        var totalNumbers 		= 16;
+        var arrayTotalNumbers 	= [];
+        var arrayRandomNumbers 	= [];
+        var tempRandomNumber;
 
         while (totalNumbers--) {
             arrayTotalNumbers.push(totalNumbers);
@@ -121,9 +126,13 @@ Window
                         cellIndex = index;
                         checkVictory();
                     } else {
-                        _contextMenu.popup();
-                    }
+                        var menu = Qt.createComponent("ContextMenu.qml").createObject(root);
 
+                        var menuItem = Qt.createComponent("MenuItem.qml").createObject(menu);
+                        menuItem.text = "New game";
+
+                        console.log(menuItem.text);
+                    }
                 }
             }
 
@@ -134,8 +143,8 @@ Window
 
         move: Transition {
             NumberAnimation {
-                properties: "x,y";
-                duration: 400;
+                properties: "x,y"
+                duration: 400
                 easing.type: Easing.InOutExpo
             }
         }
@@ -160,7 +169,7 @@ Window
         }
 
         Component.onCompleted: {
-            visible = false
+            visible = false;
         }
     }
 }
