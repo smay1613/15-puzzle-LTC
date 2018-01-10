@@ -1,10 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
 import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2
-import QtQuick.Controls 1.4
-
-//import "menuCreation.js" as MenuOptions
 
 Window
 {
@@ -27,10 +23,7 @@ Window
         var left =  (index - 1) % boardSize != 3 ? (index - 1) : "undefined";
         var down = (index + boardSize);
         var up =  (index - boardSize);
-        /*
-         * TODO: Алгоритм (лучевой?) для перемещения "стека" ячеек.
-         * Проверяет уровень, на котором находится пустая ячейка и двигает соответствующее количество ячеек по направлению свободной ячейки.
-         */
+
         for(var i = 0; i < 16; i++) {
             if (_playBoardModel.get(i).value === 15) {
                 break;
@@ -55,13 +48,12 @@ Window
         }
     }
 
-    function checkVictory() {
+    function isVictory() {
         for(var i = 0; i < 16; i++) {
             if(_playBoardModel.get(i).value !== i) {
                 return false;
             }
         }
-        _victoryDialog.open();
         return true;
     }
 
@@ -105,6 +97,7 @@ Window
 
         delegate: Cell {
             id: _cellRectangle
+
             function cellInitialize() {
                 cellValue = _playBoardModel.get(index).value;
                 cellIndex = index;
@@ -124,15 +117,20 @@ Window
                     if(mouse.button & Qt.LeftButton) {
                         playBoardMakeMove(index);
                         cellIndex = index;
-                        checkVictory();
-                    } else {
-                        var menu = Qt.createComponent("ContextMenu.qml").createObject(root);
+                        if(isVictory())
+                        {
+                            var dialogComponent = Qt.createComponent("VictoryDialog.qml");
+                            var dialog = dialogComponent.createObject(root);
 
-                        var menuItem = Qt.createComponent("MenuItem.qml").createObject(menu, {"text" : "123"});
-                        menuItem.text = "New game";
-                        //console.log(_playBoardGrid)
-                        //console.log(parent)
+                            dialog.show();
+                            dialog.dialogAccepted.connect(playBoardShuffle);
+                        }
+                    } else {
+                        var menuComponent = Qt.createComponent("ContextMenu.qml");
+                        var menu = menuComponent.createObject(root);
+
                         menu.popup();
+                        menu.itemClicked.connect(playBoardShuffle);
                     }
                 }
             }
@@ -157,21 +155,6 @@ Window
 
     ListModel {
         id: _playBoardModel
-    }
-
-    MessageDialog {
-        id: _victoryDialog
-
-        title: "Victory!"
-        text: "Congratulations! You won! Start a new game?"
-
-        onAccepted: {
-            playBoardShuffle();
-        }
-
-        Component.onCompleted: {
-            visible = false;
-        }
     }
 }
 

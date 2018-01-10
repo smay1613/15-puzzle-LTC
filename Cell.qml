@@ -5,8 +5,6 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
 
 Rectangle {
-
-
     property int cellValue
     property int cellIndex
     property alias mouseArea: _mouseArea
@@ -23,7 +21,7 @@ Rectangle {
         anchors.centerIn: parent
 
         text: cellValue + 1
-        font.pointSize: parent.height * 0.6
+        font.pointSize: parent.height > parent.width ? parent.width * 0.6 : parent.height * 0.6
     }
 
     MouseArea {
@@ -31,13 +29,5 @@ Rectangle {
         anchors.fill: parent
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
-
-        Menu {
-            id: _contextMenu
-            MenuItem {
-                text: "Start a new game";
-                onTriggered: playBoardShuffle()
-            }
-        }
     }
 }
