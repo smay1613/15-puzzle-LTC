@@ -128,7 +128,7 @@ Window
                     } else {
                         var menu = Qt.createComponent("ContextMenu.qml").createObject(root);
 
-                        var menuItem = Qt.createComponent("MenuItem.qml").createObject(menu, {"text" : "123"});
+                        var menuItem = Qt.createComponent("MenuItem.qml").createObject(menu);
                         menuItem.text = "New game";
                         //console.log(_playBoardGrid)
                         //console.log(parent)

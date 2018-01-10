@@ -2,5 +2,8 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Cell.qml</file>
+        <file>ContextMenu.qml</file>
+        <file>menuCreation.js</file>
+        <file>MenuItem.qml</file>
     </qresource>
 </RCC>

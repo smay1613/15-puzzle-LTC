@@ -5,7 +5,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Controls 1.4
 
 Rectangle {
-    id: _cellRectangle
+
 
     property int cellValue
     property int cellIndex
