@@ -4,5 +4,6 @@
         <file>Cell.qml</file>
         <file>ContextMenu.qml</file>
         <file>VictoryDialog.qml</file>
+        <file>functions.js</file>
     </qresource>
 </RCC>

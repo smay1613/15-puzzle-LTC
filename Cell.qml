@@ -1,12 +1,12 @@
 import QtQuick 2.5
-import QtQuick.Window 2.2
-import QtQuick.Layouts 1.3
-import QtQuick.Dialogs 1.2
+
 import QtQuick.Controls 1.4
 
 Rectangle {
-    property int cellValue
-    property int cellIndex
+    id: _cellRectangle
+
+    property int cellValue: value
+    property int cellIndex: index
 
     signal cellClicked(int button)
 
@@ -19,14 +19,10 @@ Rectangle {
     Text {
         id: _cellText
 
-        function min(value1, value2) {
-            return Math.min(value1, value2)
-        }
-
         anchors.centerIn: parent
 
         text: cellValue + 1
-        font.pointSize: min(parent.width, parent.height) * 0.6
+        font.pointSize: Math.min(_cellRectangle.width, _cellRectangle.height) * 0.6
     }
 
     MouseArea {
