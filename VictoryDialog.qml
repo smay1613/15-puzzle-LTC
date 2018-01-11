@@ -10,5 +10,6 @@ MessageDialog {
 
     onAccepted: {
         dialogAccepted();
+        _victoryDialog.destroy();
     }
 }

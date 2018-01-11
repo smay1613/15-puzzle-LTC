@@ -10,6 +10,7 @@ Menu {
 
         onTriggered: {
             itemClicked();
+            _contextMenu.destroy();
         }
     }
 }

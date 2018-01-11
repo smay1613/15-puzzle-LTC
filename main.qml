@@ -20,7 +20,7 @@ Window
 
     function playBoardMakeMove(index) {
         var right = (index + 1) % boardSize != 0 ? (index + 1) : "undefined";
-        var left =  (index - 1) % boardSize != 3 ? (index - 1) : "undefined";
+        var left =  (index - 1) % boardSize != boardSize - 1 ? (index - 1) : "undefined";
         var down = (index + boardSize);
         var up =  (index - boardSize);
 
@@ -93,6 +93,7 @@ Window
         cellHeight: height / boardSize
 
         interactive: false
+
         model: _playBoardModel
 
         delegate: Cell {
@@ -107,32 +108,29 @@ Window
                 }
             }
 
-            width: _playBoardGrid.cellWidth - 3
-            height: _playBoardGrid.cellHeight - 3
+            width: _playBoardGrid.cellWidth + 3
+            height: _playBoardGrid.cellHeight + 3
 
-            Connections {
-                target: mouseArea
+            onCellClicked: {
+                if(button === Qt.LeftButton) {
+                    playBoardMakeMove(index);
+                    cellIndex = index;
 
-                onClicked: {
-                    if(mouse.button & Qt.LeftButton) {
-                        playBoardMakeMove(index);
-                        cellIndex = index;
-                        if(isVictory())
-                        {
-                            var dialogComponent = Qt.createComponent("VictoryDialog.qml");
-                            var dialog = dialogComponent.createObject(root);
+                    if(isVictory()) {
+                        var dialogComponent = Qt.createComponent("VictoryDialog.qml");
+                        var dialog = dialogComponent.createObject(root);
 
-                            dialog.show();
-                            dialog.dialogAccepted.connect(playBoardShuffle);
-                        }
-                    } else {
-                        var menuComponent = Qt.createComponent("ContextMenu.qml");
-                        var menu = menuComponent.createObject(root);
-
-                        menu.popup();
-                        menu.itemClicked.connect(playBoardShuffle);
+                        dialog.show();
+                        dialog.dialogAccepted.connect(playBoardShuffle);
                     }
+                } else {
+                    var menuComponent = Qt.createComponent("ContextMenu.qml");
+                    var menu = menuComponent.createObject(root);
+
+                    menu.popup();
+                    menu.itemClicked.connect(playBoardShuffle);
                 }
+
             }
 
             Component.onCompleted: {

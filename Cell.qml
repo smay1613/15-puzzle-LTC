@@ -7,7 +7,8 @@ import QtQuick.Controls 1.4
 Rectangle {
     property int cellValue
     property int cellIndex
-    property alias mouseArea: _mouseArea
+
+    signal cellClicked(int button)
 
     color: "lightgreen"
     border {
@@ -18,10 +19,14 @@ Rectangle {
     Text {
         id: _cellText
 
+        function min(value1, value2) {
+            return Math.min(value1, value2)
+        }
+
         anchors.centerIn: parent
 
         text: cellValue + 1
-        font.pointSize: parent.height > parent.width ? parent.width * 0.6 : parent.height * 0.6
+        font.pointSize: min(parent.width, parent.height) * 0.6
     }
 
     MouseArea {
@@ -29,5 +34,10 @@ Rectangle {
         anchors.fill: parent
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: {
+            cellClicked(mouse.button);
+        }
     }
 }
+
+
