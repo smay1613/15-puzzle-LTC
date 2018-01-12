@@ -1,8 +1,0 @@
-Project recreated.
-
-Fixes:
--Removed unused ids
--Added openmenu & opendialog in functions.js
--functions.js now is lib
--context menu now on a full board
--some codefixes

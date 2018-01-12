@@ -1,11 +1,11 @@
 .pragma library
 
-function shuffleModel(model) {
-    var newModel = generateArrayRandomNumber();
+function shuffleModel(model, size) {
+    var newModel = generateArrayRandomNumber(size);
 
     model.clear();
 
-    for (var i = 0; i < 16; i++) {
+    for (var i = 0; i < size; i++) {
         model.append({value: newModel[i]});
     }
 }
@@ -16,8 +16,8 @@ function modelMakeMove(model, index, boardSize) {
     var down = (index + boardSize);
     var up =  (index - boardSize);
 
-    for(var i = 0; i < 16; i++) {
-        if (model.get(i).value === 15) {
+    for(var i = 0; i < boardSize * boardSize - 1; i++) {
+        if (model.get(i).value === boardSize * boardSize - 1) {
             break;
         }
     }
@@ -40,8 +40,8 @@ function modelMakeMove(model, index, boardSize) {
     }
 }
 
-function isVictory(model) {
-    for(var i = 0; i < 16; i++) {
+function isVictory(model, size) {
+    for(var i = 0; i < size; i++) {
         if(model.get(i).value !== i) {
             return false;
         }
@@ -49,8 +49,8 @@ function isVictory(model) {
     return true;
 }
 
-function generateArrayRandomNumber() {
-    var totalNumbers 		= 16;
+function generateArrayRandomNumber(size) {
+    var totalNumbers 		= size;
     var arrayTotalNumbers 	= [];
     var arrayRandomNumbers 	= [];
     var tempRandomNumber;
