@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ContextMenu.qml</file>
+        <file>Cell.qml</file>
+        <file>VictoryDialog.qml</file>
+        <file>functions.js</file>
+    </qresource>
+</RCC>
