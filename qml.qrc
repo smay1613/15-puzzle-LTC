@@ -4,6 +4,7 @@
         <file>ContextMenu.qml</file>
         <file>Cell.qml</file>
         <file>VictoryDialog.qml</file>
-        <file>functions.js</file>
+        <file>imports/ModelModule/functions.js</file>
+        <file>imports/ModelModule/qmldir</file>
     </qresource>
 </RCC>

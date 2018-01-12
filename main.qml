@@ -1,7 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Window 2.2
-
-import "functions.js" as ModelFunctions
+import ModelModule 1.0
 
 Window
 {
@@ -48,7 +47,7 @@ Window
                     ModelFunctions.modelMakeMove(_playBoardModel, index, boardSize);
 
                     if(ModelFunctions.isVictory(_playBoardModel)) {
-                        ModelFunctions.openDialog(root, playBoardShuffleModel)
+                        ModelFunctions.openDialog(root, playBoardShuffleModel);
                     }
             }
         }
