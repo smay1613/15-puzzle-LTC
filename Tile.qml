@@ -1,33 +1,37 @@
 import QtQuick 2.5
-import QtQuick.Controls 1.4
+import QtGraphicalEffects 1.0
 
-Rectangle {
-    id: _cellRectangle
+Item {
+    id: root
 
-    signal cellClicked(int button)
+    property string internalText: ""
 
-    color: "lightgreen"
-    border {
-        color: "black"
-        width: 3
-    }
+    Rectangle {
+        id: _tile
 
-    Text {
-        anchors.centerIn: parent
+        anchors.fill: root
 
-        text: cellValue + 1
-        font.pointSize: Math.min(_cellRectangle.width, _cellRectangle.height) * 0.6
-    }
+        color: "lightgreen"
+        border.color: "black"
+        border.width: 1
+        radius: width * 0.1
 
-    MouseArea {
-        id: _mouseArea
-        anchors.fill: parent
+        Text {
+            text: internalText
 
-        acceptedButtons: Qt.LeftButton
-        onClicked: {
-            cellClicked(mouse.button);
+            font.bold: true
+            font.pointSize: root.height ? root.height * 0.33
+                                         : 1
+            anchors.centerIn: _tile
         }
     }
-}
 
+    DropShadow {
+        anchors.fill: root
+
+        source: _tile
+        verticalOffset: 4
+        horizontalOffset: verticalOffset / 2
+    }
+}
 

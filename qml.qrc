@@ -1,10 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>ContextMenu.qml</file>
-        <file>VictoryDialog.qml</file>
         <file>imports/ModelModule/functions.js</file>
         <file>imports/ModelModule/qmldir</file>
         <file>Tile.qml</file>
+        <file>GameBoard.qml</file>
+        <file>GameController.qml</file>
     </qresource>
 </RCC>
