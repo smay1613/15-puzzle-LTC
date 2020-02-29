@@ -4,7 +4,7 @@ import QtQml.Models 2.11
 Item {
     id: root
 
-    property int boardSize: 3
+    property int boardSize: 4
     readonly property int totalCount: boardSize * boardSize
     readonly property int emptyValue: totalCount
 
