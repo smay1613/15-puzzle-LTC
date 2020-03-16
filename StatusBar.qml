@@ -3,7 +3,7 @@ import QtQuick 2.0
 Rectangle {
     Text {
         id: timerTextField
-        text: qsTr("0")
+        text: qsTr("00:00")
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: parent.top
@@ -39,7 +39,7 @@ Rectangle {
         repeat: true
         onTriggered: {
             ++seconds;
-            timerTextField.text = seconds
+            timerTextField.text = new Date(seconds * 1000).toLocaleTimeString(Qt.locale(), "mm:" + "ss ")
         }
     }
 
@@ -47,7 +47,7 @@ Rectangle {
         moveCount = 0;
         seconds = 0;
 
-        timerTextField.text = seconds
+        timerTextField.text = "00:00"
         moveCountTextField.text = moveCount
 
         timer.stop()

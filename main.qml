@@ -31,7 +31,7 @@ Window {
             _board.move.connect(root.move);
             _statusBar.reset()
             _controller.winner.connect(root.showWinScreen)
-            _victory.newGame.connect(newGame)
+            _victory.newGame.connect(root.newGame)
         }
 
 

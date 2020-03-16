@@ -20,7 +20,7 @@ Popup {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                parent.newGame()
+                newGame()
             }
         }
     }

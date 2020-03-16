@@ -4,7 +4,7 @@ import QtQml.Models 2.11
 Item {
     id: root
 
-    property int boardSize: 2
+    property int boardSize: 4
     readonly property int totalCount: boardSize * boardSize
     readonly property int emptyValue: totalCount
 
@@ -50,7 +50,8 @@ Item {
     }
 
     function newGame() {
-        _internal.generateBoard()
+        _internal.shuffleBoard();
+        correctValueCount = 0;
     }
 
     QtObject {
