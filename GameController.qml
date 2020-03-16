@@ -9,7 +9,8 @@ Item {
     readonly property int emptyValue: totalCount
 
     readonly property alias model: _model
-
+    property int correctValueCount: 0
+    signal winner()
     function makeMove(index)
     {
         console.assert(index >= 0 && index < totalCount, "Invalid index passed!");
@@ -19,7 +20,7 @@ Item {
         if (!_internal.isAdjacent(index, empty))
         {
             console.debug("Nothing to do. Hidden value index:", empty);
-            return;
+            return false;
         }
 
         var down = index + boardSize;
@@ -35,6 +36,22 @@ Item {
                 model.move(down - 1, index, 1);
                 break;
         }
+
+             checkWinner()
+        return true;
+    }
+
+    function checkWinner() {
+        for (var i = 0; i < model.count; ++i) {
+            if (model.get(i).value - 1 !== i)
+                return
+        }
+        winner()
+    }
+
+    function newGame() {
+        _internal.shuffleBoard();
+        correctValueCount = 0;
     }
 
     QtObject {
