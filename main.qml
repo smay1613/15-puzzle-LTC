@@ -12,9 +12,12 @@ Window {
     GameBoard
     {
         id: _board
-        anchors.fill: parent
+        anchors.bottom: parent.bottom
         model: _controller.model
         size: _controller.boardSize
+
+        width: parent.width
+        height: parent.height*0.8
 
         hiddenElementValue: _controller.emptyValue
     }
@@ -26,5 +29,12 @@ Window {
             _board.move.connect(_controller.makeMove);
         }
     }
-}
 
+    StatusBar {
+        id: statusbar
+        anchors.top: parent.top
+        height: parent.height - _board.height
+        width: parent.width
+        count:_controller.moveCounter
+    }
+}
