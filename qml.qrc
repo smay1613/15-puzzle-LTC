@@ -1,8 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>Tile.qml</file>
         <file>GameBoard.qml</file>
         <file>GameController.qml</file>
+        <file>Tile.qml</file>
+        <file>StatusBar.qml</file>
     </qresource>
 </RCC>

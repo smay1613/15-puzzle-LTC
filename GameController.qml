@@ -1,10 +1,13 @@
 import QtQuick 2.10
 import QtQml.Models 2.11
+import QtQuick.Controls 2.0
+import QtGraphicalEffects 1.0
 
 Item {
     id: root
 
-    property int boardSize: 4
+    property int boardSize: 3
+    property int moveCounter: 0
     readonly property int totalCount: boardSize * boardSize
     readonly property int emptyValue: totalCount
 
@@ -35,6 +38,9 @@ Item {
                 model.move(down - 1, index, 1);
                 break;
         }
+        moveCounter++;
+        if (_internal.isGameFinished())
+            popup.open();
     }
 
     QtObject {
@@ -102,6 +108,15 @@ Item {
                 }
             }
         }
+
+        function isGameFinished() {
+            for (var i = 0; i < model.count - 1; i++)
+            {
+                if (model.get(i).value !== i+1)
+                    return false;
+            }
+            return true;
+        }
     }
 
     ListModel
@@ -112,4 +127,91 @@ Item {
     Component.onCompleted: {
         _internal.shuffleBoard();
     }
+
+    Popup {
+        id: popup
+        width: 300
+        height: 200
+        modal: true
+        focus: true
+        anchors.centerIn: root.anchors.centerIn
+        Text {
+            id: congratulations
+            text: qsTr("CONGRATULATIONS!")
+            verticalAlignment: Text.AlignVCenter
+        }
+
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+
+        background: Rectangle {
+            id: _restart
+            border.color: "black"
+            border.width: 1
+            radius: 2
+            gradient: Gradient.SoftGrass
+
+            layer.enabled: _quit.enabled
+            layer.effect: DropShadow {
+                anchors.fill: parent
+                verticalOffset: 2
+                horizontalOffset: verticalOffset / 2
+            }
+        }
+
+        contentData:
+            Button {
+                height: parent.height/ 5
+                width: parent.width / 2.5
+                anchors.left: parent.left
+                anchors.bottom: parent.bottom
+                text: "Restart"
+                onClicked: {
+                    popup.close();
+                    _internal.shuffleBoard();
+                    moveCounter = 0;
+                }
+
+                background: Rectangle {
+                    border.color: "black"
+                    border.width: 1
+                    radius: 2
+                    color: "lightyellow"
+
+                    layer.enabled: _quit.enabled
+                    layer.effect: DropShadow {
+                        anchors.fill: parent
+                        verticalOffset: 2
+                        horizontalOffset: verticalOffset / 2
+                    }
+                }
+            }
+
+            Button {
+                id: _quit
+                height: parent.height/ 5
+                width: parent.width / 2.5
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                text: "Quit"
+                onClicked: Qt.quit()
+
+                background: Rectangle {
+                    border.color: "black"
+                    border.width: 1
+                    radius: 2
+                    color: "lightyellow"
+
+                    layer.enabled: _quit.enabled
+                    layer.effect: DropShadow {
+                        anchors.fill: parent
+                        verticalOffset: 2
+                        horizontalOffset: verticalOffset / 2
+                    }
+                }
+
+            }
+
+
+    }
+
 }

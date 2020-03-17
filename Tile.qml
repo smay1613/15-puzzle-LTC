@@ -11,10 +11,13 @@ Item {
 
         anchors.fill: root
 
-        color: "lightgreen"
+        //color: "lightgreen"
+
         border.color: "black"
         border.width: 1
         radius: width * 0.1
+
+        gradient: Gradient.NewYork
 
         Text {
             text: internalText
@@ -34,4 +37,3 @@ Item {
         horizontalOffset: verticalOffset / 2
     }
 }
-
